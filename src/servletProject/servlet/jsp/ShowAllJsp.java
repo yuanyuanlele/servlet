@@ -1,4 +1,4 @@
-package servletProject.servlet;
+package servletProject.servlet.jsp;
 
 import servletProject.enity.Admin;
 
