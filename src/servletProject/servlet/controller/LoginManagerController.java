@@ -20,14 +20,20 @@ public class LoginManagerController extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         String username=req.getParameter("username");
         String password=req.getParameter("password");
-        ManagerService managerService=new ManagerServiceImpl();
-        Manager manager=managerService.login(username,password);
-        if (manager!=null){
-            HttpSession session= req.getSession();
-            session.setAttribute("manager",manager);
-            resp.sendRedirect("/Myservlet_war_exploded/showallcontroller");
-        }else {
-            System.out.println(0);
+        String inputVcode=req.getParameter("inputVcode");
+        String codes=(String) req.getSession().getAttribute("codes");
+        if (inputVcode!=null&&inputVcode.equals(codes)){
+            ManagerService managerService=new ManagerServiceImpl();
+            Manager manager=managerService.login(username,password);
+            if (manager!=null){
+                HttpSession session= req.getSession();
+                session.setAttribute("manager",manager);
+                resp.sendRedirect("/Myservlet_war_exploded/showallcontroller");
+            }else {
+                System.out.println(0);
+                resp.sendRedirect("/Myservlet_war_exploded/loginmanager.html");
+            }
+        }else{
             resp.sendRedirect("/Myservlet_war_exploded/loginmanager.html");
         }
     }
